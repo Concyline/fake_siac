@@ -13,39 +13,32 @@ export class ClientesController {
       return this.clientesService.findAll();
     } 
 
-    @Get('fake/:cpf')
-    async getFake(@Param('cpf') cpf): Promise<Cliente> {
+    @Get('fake')
+    async getFake(): Promise<Cliente> {
       const promisseClientes = this.clientesService.findAll();
 
       let cli = new Cliente()
 
       await promisseClientes.then(lClientes => {
-        
-        cli.C0 = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].C0
-        cli.INSCRICAO = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].INSCRICAO
-        cli.RAZAO_SOCIAL = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].RAZAO_SOCIAL
-        cli.FANTASIA = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].FANTASIA
-        cli.EMAIL = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].EMAIL
-        cli.DDD = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].DDD
-        cli.TELEFONE = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].TELEFONE
-        cli.FAX = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].FAX
-        cli.ENDERECO_FAT = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].ENDERECO_FAT
-        cli.BAIRRO_FAT = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].BAIRRO_FAT
-        cli.CEP = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].CEP
-        cli.NUMERO = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].NUMERO
+        cli = this.clientesService.getCliente(lClientes, false)
+      })
 
-        if(cpf == 'true'){
-          cli.CGC = this.clientesService.cpf(true)
-        }else{
-          cli.CGC = this.clientesService.cnpj(true)
-        }
+      return cli;
 
-        cli.OBSERVACAO = 'Cliente de teste gerado atravez da API fake.'
+    } 
+    @Get('fake/:cpf')
+    async getFakeParameter(@Param('cpf') cpf): Promise<Cliente> {
+      const promisseClientes = this.clientesService.findAll();
 
+      let cli = new Cliente()
+
+      await promisseClientes.then(lClientes => {
+        cli = this.clientesService.getCliente(lClientes, cpf)
       })
 
       return cli;
     } 
+    
 
     @Post()
     async create(@Body() cliente: Cliente): Promise<any> {
