@@ -14,15 +14,34 @@ export class ClientesController {
     } 
 
     @Get('fake')
-    getFake(): Cliente {
-      const lClientes = this.clientesService.findAll();
+    async getFake(): Promise<Cliente> {
+      const promisseClientes = this.clientesService.findAll();
+
+      let lClientes: Cliente[] 
+
+      await promisseClientes.then(array => {
+        lClientes = array
+      })
 
       let cli = new Cliente()
 
-      cli.C0 = "teste"
+      cli.C0 = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].C0
+      cli.INSCRICAO = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].INSCRICAO
+      cli.RAZAO_SOCIAL = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].RAZAO_SOCIAL
+      cli.FANTASIA = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].FANTASIA
+      cli.EMAIL = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].EMAIL
+      cli.DDD = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].DDD
+      cli.TELEFONE = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].TELEFONE
+      cli.FAX = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].FAX
+      cli.ENDERECO_FAT = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].ENDERECO_FAT
+      cli.BAIRRO_FAT = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].BAIRRO_FAT
+      cli.CEP = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].CEP
+      cli.NUMERO = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].NUMERO
 
       return cli;
     } 
+
+  
 
     @Post()
     async create(@Body() cliente: Cliente): Promise<any> {
