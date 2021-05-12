@@ -13,6 +13,17 @@ export class ClientesController {
       return this.clientesService.findAll();
     } 
 
+    @Get('fake')
+    getFake(): Cliente {
+      const lClientes = this.clientesService.findAll();
+
+      let cli = new Cliente()
+
+      cli.C0 = "teste"
+
+      return cli;
+    } 
+
     @Post()
     async create(@Body() cliente: Cliente): Promise<any> {
       return this.clientesService.create(cliente);
