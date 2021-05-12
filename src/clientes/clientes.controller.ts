@@ -20,7 +20,7 @@ export class ClientesController {
       let cli = new Cliente()
 
       await promisseClientes.then(lClientes => {
-        cli = this.clientesService.getCliente(lClientes, false)
+        cli = this.clientesService.getCliente(lClientes, 'false')
       })
 
       return cli;

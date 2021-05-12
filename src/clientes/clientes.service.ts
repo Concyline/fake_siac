@@ -28,32 +28,43 @@ export class ClientesService {
     return await this.contactRepository.delete(id);
   }
 
-  getCliente(lClientes: Cliente[], cpf: boolean ):Cliente{
+  getCliente(lClientes: Cliente[], cpf: string): Cliente {
+    let cli = new Cliente();
 
-    let cli = new Cliente()
+    cli.C0 = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].C0;
+    cli.INSCRICAO =
+      lClientes[Math.floor(Math.random() * (lClientes.length + 1))].INSCRICAO;
+    cli.RAZAO_SOCIAL =
+      lClientes[
+        Math.floor(Math.random() * (lClientes.length + 1))
+      ].RAZAO_SOCIAL;
+    cli.FANTASIA =
+      lClientes[Math.floor(Math.random() * (lClientes.length + 1))].FANTASIA;
+    cli.EMAIL =
+      lClientes[Math.floor(Math.random() * (lClientes.length + 1))].EMAIL;
+    cli.DDD = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].DDD;
+    cli.TELEFONE =
+      lClientes[Math.floor(Math.random() * (lClientes.length + 1))].TELEFONE;
+    cli.FAX = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].FAX;
+    cli.ENDERECO_FAT =
+      lClientes[
+        Math.floor(Math.random() * (lClientes.length + 1))
+      ].ENDERECO_FAT;
+    cli.BAIRRO_FAT =
+      lClientes[Math.floor(Math.random() * (lClientes.length + 1))].BAIRRO_FAT;
+    cli.CEP = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].CEP;
+    cli.NUMERO =
+      lClientes[Math.floor(Math.random() * (lClientes.length + 1))].NUMERO;
 
-    cli.C0 = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].C0
-    cli.INSCRICAO = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].INSCRICAO
-    cli.RAZAO_SOCIAL = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].RAZAO_SOCIAL
-    cli.FANTASIA = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].FANTASIA
-    cli.EMAIL = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].EMAIL
-    cli.DDD = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].DDD
-    cli.TELEFONE = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].TELEFONE
-    cli.FAX = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].FAX
-    cli.ENDERECO_FAT = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].ENDERECO_FAT
-    cli.BAIRRO_FAT = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].BAIRRO_FAT
-    cli.CEP = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].CEP
-    cli.NUMERO = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].NUMERO
-
-    if(cpf){
-      cli.CGC = this.cpf(true)
-    }else{
-      cli.CGC = this.cnpj(true)
+    if (cpf == 'true') {
+      cli.CGC = this.cpf(true);
+    } else {
+      cli.CGC = this.cnpj(true);
     }
 
-    cli.OBSERVACAO = 'Cliente de teste gerado atravez da API fake.'
+    cli.OBSERVACAO = 'Cliente de teste gerado atravez da API fake.';
 
-    return cli
+    return cli;
   }
 
   cpf(comPontos: boolean): string {
