@@ -13,8 +13,8 @@ export class ClientesController {
       return this.clientesService.findAll();
     } 
 
-    @Get('fake')
-    async getFake(): Promise<Cliente> {
+    @Get('fake/:cpf')
+    async getFake(@Param('cpf') cpf): Promise<Cliente> {
       const promisseClientes = this.clientesService.findAll();
 
       let cli = new Cliente()
@@ -34,12 +34,18 @@ export class ClientesController {
         cli.CEP = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].CEP
         cli.NUMERO = lClientes[Math.floor(Math.random() * (lClientes.length + 1))].NUMERO
 
+        if(cpf == 'true'){
+          cli.CGC = this.clientesService.cpf(true)
+        }else{
+          cli.CGC = this.clientesService.cnpj(true)
+        }
+
+        cli.OBSERVACAO = 'Cliente de teste gerado atravez da API fake.'
+
       })
 
       return cli;
     } 
-
-  
 
     @Post()
     async create(@Body() cliente: Cliente): Promise<any> {

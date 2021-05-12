@@ -40,4 +40,8 @@ export class Cliente {
 
     @Column()
     NUMERO: string;
+
+    CGC: string;
+
+    OBSERVACAO: string
 }
