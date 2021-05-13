@@ -15,6 +15,7 @@ export class ClientesController {
       return this.clientesService.findAll();
     } 
 
+    @UseGuards(JwtAuthGuard)
     @Get('fake')
     async getFake(): Promise<Cliente> {
       const promisseClientes = this.clientesService.findAll();
@@ -28,6 +29,8 @@ export class ClientesController {
       return cli;
 
     } 
+
+    @UseGuards(JwtAuthGuard)
     @Get('fake/:cpf')
     async getFakeParameter(@Param('cpf') cpf): Promise<Cliente> {
       const promisseClientes = this.clientesService.findAll();
@@ -41,12 +44,13 @@ export class ClientesController {
       return cli;
     } 
     
-
+    @UseGuards(JwtAuthGuard)
     @Post()
     async create(@Body() cliente: Cliente): Promise<any> {
       return this.clientesService.create(cliente);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put(':id')
     async update(@Param('id') id, @Body() cliente: Cliente): Promise<any> {
         cliente.id = Number(id);
@@ -54,11 +58,13 @@ export class ClientesController {
         return this.clientesService.update(cliente);
     } 
 
+    @UseGuards(JwtAuthGuard)
     @Delete(':id')
     async delete(@Param('id') id): Promise<any> {
       return this.clientesService.delete(id);
     }  
 
+    @UseGuards(JwtAuthGuard)
     @Get('inicia')
     getInicia(): string{
       try {
