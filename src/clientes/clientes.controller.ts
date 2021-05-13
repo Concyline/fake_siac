@@ -1,6 +1,7 @@
+import { JwtAuthGuard } from './../auth/shared/jwt-auth.guard';
 import { Cliente } from './clientes.entity';
 import { ClientesService } from './clientes.service';
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards } from '@nestjs/common';
 const fs = require('fs')
 
 @Controller('clientes')
@@ -8,6 +9,7 @@ export class ClientesController {
 
     constructor(private clientesService: ClientesService){}
 
+    @UseGuards(JwtAuthGuard)
     @Get()
     index(): Promise<Cliente[]> {
       return this.clientesService.findAll();
