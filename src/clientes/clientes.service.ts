@@ -1,31 +1,31 @@
+import { InjectRepository } from '@nestjs/typeorm';
 import { Cliente } from './clientes.entity';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateResult, DeleteResult } from 'typeorm';
-import { strict } from 'assert';
+
 
 @Injectable()
 export class ClientesService {
   constructor(
     @InjectRepository(Cliente)
-    private contactRepository: Repository<Cliente>,
+    private repository: Repository<Cliente>,
   ) {}
 
   async findAll(): Promise<Cliente[]> {
-    return await this.contactRepository.find();
+    return await this.repository.find();
   }
 
   async create(cliente: Cliente): Promise<Cliente> {
-    return await this.contactRepository.save(cliente);
+    return await this.repository.save(cliente);
   }
 
   async update(cliente: Cliente): Promise<UpdateResult> {
-    return await this.contactRepository.update(cliente.id, cliente);
+    return await this.repository.update(cliente.id, cliente);
   }
 
   async delete(id): Promise<DeleteResult> {
-    return await this.contactRepository.delete(id);
+    return await this.repository.delete(id);
   }
 
   getCliente(lClientes: Cliente[], cpf: string): Cliente {
